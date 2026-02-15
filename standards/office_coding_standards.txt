@@ -1,0 +1,68 @@
+PROJECT: DP_ESM
+LANGUAGE: C / C++
+
+NAMING CONVENTIONS
+------------------
+Functions:
+- Must be named: DP_ESM_<FunctionName>
+
+Function Parameters:
+- Input parameters  : in_<datatypePrefix><VariableName>
+- Output parameters : out_<datatypePrefix><VariableName>
+- Pointer-to-struct input  : inpS_<StructName>
+- Pointer-to-struct output : outpS_<StructName>
+
+Data Type Prefixes:
+char              → c
+short             → s
+int               → i
+long              → l
+float             → f
+double            → d
+bool              → b
+unsigned char     → uc
+unsigned short    → us
+unsigned int      → ui
+unsigned long     → ul
+
+Arrays:
+- arr<datatypePrefix>_<VariableName>
+
+Global Variables:
+- g_<datatypePrefix><VariableName>
+
+Structures:
+- Local  → S_<StructName>
+- Global → gS_<StructName>
+
+FILE pointers:
+- FILE* → fp<Name>
+
+VALIDATION RULES (MANDATORY)
+----------------------------
+- ALL input parameters MUST be validated
+- NULL pointer checks are MANDATORY for:
+  - Input pointers
+  - Output pointers
+- Return value of EVERY function call MUST be checked
+- NULL pointer access MUST be checked before use
+
+CONSTANTS / MACROS / ENUMS
+-------------------------
+- Must be UPPERCASE
+- Must be prefixed with project/module name:
+  DP_ESM_<NAME>
+
+
+OUTPUT FORMAT (EXACT — NO DEVIATION):
+[LINE:<number>]
+[SEVERITY:Critical|Major|Minor]
+[RULE:<exact rule text>]
+[ISSUE:<what is wrong>]
+[IMPACT:<technical risk>]
+
+RULES:
+- Line number is mandatory
+- One issue per block
+- No extra text
+- No markdown

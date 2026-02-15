@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/mode_assistant.png</file>
+        <file>standards/office_coding_standards.txt</file>
+        <file>images/attach-file.png</file>
+        <file>images/attach-file-white.png</file>
+        <file>images/settings.png</file>
+        <file>images/settings-white.png</file>
+        <file>images/add.png</file>
+        <file>images/add-white.png</file>
+        <file>images/send.png</file>
+        <file>images/send-white.png</file>
+        <file>images/analyzing.gif</file>
+        <file>images/d.gif</file>
+        <file>images/letter-d.gif</file>
+        <file>images/d-letter-squares.gif</file>
+        <file>images/d-letter-squares-dark.gif</file>
+        <file>images/d-letter-squares-gray.gif</file>
+    </qresource>
+</RCC>

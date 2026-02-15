@@ -1,0 +1,12 @@
+{
+    \"Name\" : \"DevAssistant\",
+    \"Version\" : \"0.0.1\",
+    \"CompatVersion\" : \"0.0.1\",
+    \"Vendor\" : \"The ZCorp Company Ltd\",
+    \"Copyright\" : \"(C) The ZCorp Company\",
+    \"Group\" : \"C++\",
+    \"License\" : \"ZCorp - Commercial usage license\",
+    \"Description\" : \"Plugin used to connect with AI model for developer assitance.\",
+    \"Url\" : \"http://www.zcorp.com\",
+    $$dependencyList
+}
