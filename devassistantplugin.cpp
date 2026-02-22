@@ -48,9 +48,88 @@ bool DevAssistantPlugin::initialize(const QStringList &arguments, QString *error
     Q_UNUSED(errorString)
 
     Core::ActionContainer *actionContainer = nullptr;
-    Core::Command *sendCmd = nullptr;
+    Core::ActionContainer *cppContextMenu = nullptr;
+    Core::ActionContainer *aiMenu = nullptr;
 
-    QAction *aiAction = nullptr;
+    Core::Command *sendCmd = nullptr;
+    Core::Command *aiCmd = nullptr;
+
+    aiMenu = Core::ActionManager::createMenu("DevAssistant.AIMenu");
+    aiMenu->menu()->setTitle(tr("AI Assist"));
+
+    QAction *explainAction = new QAction(tr("Explain"), this);
+    QAction *fixAction = new QAction(tr("Fix"), this);
+    QAction *reviewAction = new QAction(tr("Review and Comment"), this);
+    QAction *genDocsAction = new QAction(tr("Generate Docs"), this);
+    QAction *genDoxygenAction = new QAction(tr("Generate Doxygen Comment"), this);
+    QAction *createDeclDefAction = new QAction(tr("Create Declaration/Definition"), this);
+    QAction *refactorAction = new QAction(tr("Refactor"), this);
+
+    Core::Command *explainCmd =
+        Core::ActionManager::registerAction(
+            explainAction,
+            "DevAssistant.Explain",
+            Core::Context(CppEditor::Constants::CPPEDITOR_ID)
+        );
+
+    Core::Command *fixCmd =
+        Core::ActionManager::registerAction(
+            fixAction,
+            "DevAssistant.Fix",
+            Core::Context(CppEditor::Constants::CPPEDITOR_ID)
+        );
+
+    Core::Command *reviewCmd =
+        Core::ActionManager::registerAction(
+            reviewAction,
+            "DevAssistant.Review",
+            Core::Context(CppEditor::Constants::CPPEDITOR_ID)
+        );
+
+    Core::Command *genDocsCmd =
+        Core::ActionManager::registerAction(
+            genDocsAction,
+            "DevAssistant.GenDocs",
+            Core::Context(CppEditor::Constants::CPPEDITOR_ID)
+        );
+
+    Core::Command *genDoxyCmd =
+        Core::ActionManager::registerAction(
+            genDoxygenAction,
+            "DevAssistant.GenDoxy",
+            Core::Context(CppEditor::Constants::CPPEDITOR_ID)
+        );
+
+    Core::Command *createDeclDefCmd =
+        Core::ActionManager::registerAction(
+            createDeclDefAction,
+            "DevAssistant.CreateDeclDef",
+            Core::Context(CppEditor::Constants::CPPEDITOR_ID)
+        );
+
+    Core::Command *refactorCmd =
+        Core::ActionManager::registerAction(
+            refactorAction,
+            "DevAssistant.Refactor",
+            Core::Context(CppEditor::Constants::CPPEDITOR_ID)
+        );
+
+    aiMenu->addAction(explainCmd);
+    aiMenu->addAction(fixCmd);
+    aiMenu->addAction(reviewCmd);
+    aiMenu->addAction(genDocsCmd);
+    aiMenu->addAction(genDoxyCmd);
+    aiMenu->addAction(createDeclDefCmd);
+    aiMenu->addAction(refactorCmd);
+
+    cppContextMenu =
+        Core::ActionManager::actionContainer(CppEditor::Constants::M_CONTEXT);
+    if(cppContextMenu)
+    {
+        cppContextMenu->addMenu(aiMenu);
+    }
+
+    //aiMenu->addAction(explainCmd);
 
     devAssistant = new DevAssistantFactory;
     aiMode = new DevAssistant_ModeAI;
@@ -61,35 +140,11 @@ bool DevAssistantPlugin::initialize(const QStringList &arguments, QString *error
     //Register our new mode to Core IDE
     ExtensionSystem::PluginManager::addObject(aiMode);
 
-    //1. Create the Action
-    aiAction = new QAction(tr("AI Assist"), this);
+//    connect(explainAction, &QAction::triggered, this, [](){
+//        DevAssistant_RequestRouter::handle(DevAssistant_RequestType::Explain);
+//    });
 
-    //2. Register the Action with a Unique ID in CPP Editor
-    //Use CPPEDITOR_ID to register action in CPP Editor
-    sendCmd = Core::ActionManager::registerAction(aiAction,
-                                                  "DevAssistant.SendToAi",
-                                                  Core::Context(CppEditor::Constants::CPPEDITOR_ID));
-
-    //3. Add it to the Cpp Editor's Context Menu
-    actionContainer = Core::ActionManager::actionContainer(CppEditor::Constants::M_CONTEXT);
-    if(actionContainer) {
-        actionContainer->addAction(sendCmd);
-    }
-
-    //4. THE MISSING LINK: Logic to open the sidebar
-    connect(aiAction, &QAction::triggered, this, []() {
-        //This ensures the sidebar expands and shows your widget ID
-
-        //1. Get the IDE command for your sidebar
-        QString commandId = QString("QtCreator.Sidebar.%1").arg(Constants::DEVASSISTANT_ID);
-        Core::Command *cmd = Core::ActionManager::command(commandId.toUtf8().data());
-
-        if(cmd && cmd->action()) {
-            //2. Triggering this standard IDE action handles the "Focus" logic
-            //If it's already open, the IDE just focuses it.
-            cmd->action()->trigger();
-        }
-    });
+//    void DevAssistant_RequestRouter::handle(DevAssistant_RequestType type)
 
     return true;
 }

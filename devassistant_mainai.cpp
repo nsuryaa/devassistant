@@ -1038,3 +1038,22 @@ void DevAssistant_MainAI::setCurrentFile(const QString& filename)
         m_lblCurrentFile->setText(filename);
     }
 }
+
+#include <stdio.h>
+
+int main() {
+    int iNum1 = 0;
+    int iNum2 = 0;
+    int iSum = 0;
+
+    printf("Enter the first number: ");
+    if (scanf("%d", &iNum1) != 1 || scanf("%d", &iNum2) != 1) {
+        return 1;
+    }
+
+    iSum = iNum1 + iNum2;
+
+    printf("The sum of %d and %d is %d\n", iNum1, iNum2, iSum);
+
+    return 0;
+}

@@ -83,4 +83,15 @@
 
 #define ASSISTANT_INPUT_OBJECT_NAME "aiChatInput"
 
+enum class DevAssistant_RequestType
+{
+    Explain,
+    Fix,
+    Review,
+    GenerateDocs,
+    GenerateDoxygen,
+    CreateDeclDef,
+    Refactor
+};
+
 #endif // DEVASSISTANT_GLOBAL_H
